@@ -4,7 +4,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 
-export const loginUser = (credentials) => {
+export const loginUser = (credentials, navigate) => {
     return async (dispatch) => {
         dispatch({ type: LOGIN_USER });
         try {
@@ -25,6 +25,8 @@ export const loginUser = (credentials) => {
 
             // Dispatch success action
             dispatch({ type: LOGIN_USER_SUCCESS, payload: data });
+              // Navigate to the profile page
+              navigate('/profile');
         } catch (error) {
             // Dispatch failure action
             dispatch({ type: LOGIN_USER_FAILURE, payload: error.message });

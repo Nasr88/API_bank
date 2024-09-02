@@ -2,6 +2,8 @@
 import React from "react"
 import HomeFeature from "../../components/homeFeature/HomeFeature"
 import iconChat from "../../assets/icon-chat.png"
+import iconMoney from "../../assets/icon-money.png"
+import iconSecurity from "../../assets/icon-security.png"
 import "../../assets/style.css"
 
 const Home =()=>{
@@ -39,34 +41,13 @@ const Home =()=>{
         <HomeFeature img={iconChat} title="You are our #1 priority" text="Need to talk to a representative? You can get in touch through our
             24/7 chat or through a phone call in less than 5 minutes."/>
        
-        <div class="feature-item">
-          <img
-            src="../../assets/icon-money.png"
-            alt="Chat Icon"
-            class="feature-icon"
-          />
-          <h3 class="feature-item-title">More savings means higher rates</h3>
-          <p>
-            The more you save with us, the higher your interest rate will be!
-          </p>
-        </div>
-        <div class="feature-item">
-          <img
-            src="../../assets/icon-security.png"
-            alt="Chat Icon"
-            class="feature-icon"
-          />
-          <h3 class="feature-item-title">Security you can trust</h3>
-          <p>
-            We use top of the line encryption to make sure your data and money
-            is always safe.
-          </p>
-        </div>
+        <HomeFeature img={iconMoney} title="More savings means higher rates" text="The more you save with us, the higher your interest rate will be!"></HomeFeature>
+        
+        <HomeFeature img={iconSecurity} title="Security you can trust" text="We use top of the line encryption to make sure your data and money is always safe."/>
+   
       </section>
     </main>
-    <footer class="footer">
-      <p class="footer-text">Copyright 2020 Argent Bank</p>
-    </footer>
+  
   </body>
 
     )
