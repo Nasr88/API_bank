@@ -34,3 +34,12 @@ export const loginUserAction = (credentials, navigate) => {
         }
     };
 };
+
+//Créer une Action de Déconnexion
+export const LOGOUT = 'LOGOUT';
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};

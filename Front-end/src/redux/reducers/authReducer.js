@@ -1,6 +1,6 @@
 // src/redux/reducers/authReducer.js
 
-import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../actions/authActions';
+import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT } from '../actions/authActions';
 
 const initialState = {
     loading: false,// Définit si une action d'authentification est en cours
@@ -31,6 +31,11 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 user: null,
                 error: action.payload,// action.payload contient le message d'erreur
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                token: null, // Réinitialise le token à null lors de la déconnexion
             };
         default:
             return state;

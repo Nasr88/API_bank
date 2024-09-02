@@ -4,6 +4,7 @@ import logo from "../../assets/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
 // import { selectUserFirstName } from '../../redux/selectors/userSelectors'; // Import du sélecteur
 import { fetchProfile } from '../../redux/actions/uerActions';
+import { logout } from '../../redux/actions/authActions'; // Importer l'action de déconnexion
 
 function Header() {
     const dispatch = useDispatch();
@@ -16,6 +17,10 @@ function Header() {
   useEffect(() => {
     dispatch(fetchProfile());
   }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout()); // Déclencher l'action de déconnexion
+  };
 
   if (!profile) {
     return <div>Loading...</div>;
@@ -42,7 +47,7 @@ return(
 					</NavLink>
 				)}
 				{profile.body.firstName  && (
-					<NavLink  className="main-nav-item" to="/">
+					<NavLink  className="main-nav-item" to="/" onClick={handleLogout}>
 						<i className="fa fa-sign-out"></i>
 						Sign Out
 					</NavLink>
