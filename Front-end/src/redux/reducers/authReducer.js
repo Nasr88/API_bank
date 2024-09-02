@@ -3,9 +3,10 @@
 import { LOGIN_USER, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../actions/authActions';
 
 const initialState = {
-    loading: false,
-    user: null,
-    error: null,
+    loading: false,// Définit si une action d'authentification est en cours
+    user: null, // Contient les informations de l'utilisateur connecté
+    error: null,// Stocke les messages d'erreur éventuels
+    token: null     // Stocke le jeton JWT pour authentification
 };
 
 const authReducer = (state = initialState, action) => {
@@ -19,9 +20,10 @@ const authReducer = (state = initialState, action) => {
         case LOGIN_USER_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                user: action.payload,// action.payload contient les données de l'utilisateur
-                error: null,
+                loading: false, // L'opération de connexion est terminée
+                user: action.payload.body.user, // Informations utilisateur récupérées
+                token: action.payload.body.token // Jeton d'authentification reçu
+          
             };
         case LOGIN_USER_FAILURE:
             return {

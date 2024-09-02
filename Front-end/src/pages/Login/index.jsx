@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../redux/actions/authActions';
+import { loginUserAction } from '../../redux/actions/authActions';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -9,12 +9,12 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();// Utilisation de useNavigate pour la redirection
-    const { loading, user, error } = useSelector((state) => state.auth);
+    const { loading, user, error } = useSelector((state) => state.auth);//re-render the component whenever the selected part of the state changes
 
     const handleSubmit = (e) => {
         e.preventDefault();
         rememberMe ? localStorage.setItem("userEmail", email) : localStorage.removeItem("userEmail");
-        dispatch(loginUser({ email, password }, navigate));
+        dispatch(loginUserAction({ email, password }, navigate));
     };
     /**
 	 Lorsque l'utilisateur clique sur la case à cocher, la valeur de la case à cocher est définie à l'opposé de ce qu'elle était
@@ -43,7 +43,7 @@ const Login = () => {
                 <button type="submit" className="sign-in-button">Sign In</button>
             </form>
             {loading && <p className="input-remember ">Loading...</p>}
-            {user && <p className="input-remember ">Welcome, {user.name}!</p>}
+            {user && <p className="input-remember ">Welcome, {user.firstName}!</p>}
             {error && <p className="input-remember input-error">Error: {error}</p>}
         </div>
     );

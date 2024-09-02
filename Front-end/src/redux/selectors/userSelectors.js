@@ -1,0 +1,1 @@
+export const selectUserFirstName = (state) => state.profile.body.firstName;
