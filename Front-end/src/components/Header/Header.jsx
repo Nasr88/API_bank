@@ -1,30 +1,34 @@
 import React, { useEffect } from 'react';
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link,useNavigate } from "react-router-dom";
 import logo from "../../assets/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
-// import { selectUserFirstName } from '../../redux/selectors/userSelectors'; // Import du sélecteur
+import { selectUserProfile } from '../../redux/selectors/userSelectors'; // Import du sélecteur
 import { fetchProfile } from '../../redux/actions/uerActions';
-import { logout } from '../../redux/actions/authActions'; // Importer l'action de déconnexion
+import { logout } from '../../redux/actions/uerActions'; // Importer l'action de déconnexion
 
 function Header() {
     const dispatch = useDispatch();
-    //  const userFirstName = useSelector(selectUserFirstName); // Utilisation du sélecteur
-
-    // console.log("user first name:",userFirstName);
+    const navigate =  useNavigate();
     
-    const profile = useSelector((state) => state.user.profile);
+    const profile = useSelector(selectUserProfile);
 
-  useEffect(() => {
-    dispatch(fetchProfile());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchProfile());
+      }, [dispatch]);
 
   const handleLogout = () => {
-    dispatch(logout()); // Déclencher l'action de déconnexion
-  };
+    // Vider le cache local
+    localStorage.clear();
+    sessionStorage.clear();
 
-  if (!profile) {
-    return <div>Loading...</div>;
-  }
+    // Déclencher l'action de déconnexion
+    dispatch(logout());
+
+    // Rediriger l'utilisateur vers la page de connexion ou la page d'accueil
+    navigate("/login"); 
+};
+
+
 
 return(
     <nav className="main-nav">
@@ -33,20 +37,20 @@ return(
 				<h1 className="sr-only">Argent Bank </h1>
 			</Link>
             <div>
-				{!profile.body.firstName && (
-					<NavLink className="main-nav-item" to="/login">
+				{!profile && (
+					<NavLink className="main-nav-item" to="/sign-in">
 						<i className="fa fa-user-circle"></i>
 						Sign In
 					</NavLink>
 				)}
-                {profile.body.firstName  && (
+                {profile  && (
 					<NavLink className="main-nav-item" to="/profile">
 						<i className="fa fa-user-circle"></i>
 						{!profile.body.firstName  && "Profile"}
 						{profile.body.firstName  && profile.body.firstName }
 					</NavLink>
 				)}
-				{profile.body.firstName  && (
+				{profile && (
 					<NavLink  className="main-nav-item" to="/" onClick={handleLogout}>
 						<i className="fa fa-sign-out"></i>
 						Sign Out
@@ -56,6 +60,7 @@ return(
     </nav>
 )
 }
+
 export default Header;
 
 

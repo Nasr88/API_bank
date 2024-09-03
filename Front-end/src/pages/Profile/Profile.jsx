@@ -1,16 +1,42 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { fetchProfile } from '../../redux/actions/uerActions';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { NavLink, Link,useNavigate } from "react-router-dom";
 
-const  Profile = ()=>{
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserProfile } from '../../redux/selectors/userSelectors'; // Import du sélecteur
+import { fetchProfile } from '../../redux/actions/uerActions';
+
+
+function Header() {
     const dispatch = useDispatch();
-    const profile = useSelector((state) => state.user.profile);
+
     
-    React.useEffect(() => {
+    const profile = useSelector(selectUserProfile);
+
+    useEffect(() => {
         dispatch(fetchProfile());
       }, [dispatch]);
+
+
+
+
+
+return(
+  
+            <div>
+			
+                {profile  && (
+					<NavLink className="main-nav-item" to="/profile">
+						<i className="fa fa-user-circle"></i>
+						{!profile.body.firstName  && "Profile"}
+						{profile.body.firstName  && profile.body.firstName }
+					</NavLink>
+				)}
+			
+                </div>
     
-    return (<>{profile?.username}</>)
+)
 }
-export default Profile;
+
+export default Header;
+
+

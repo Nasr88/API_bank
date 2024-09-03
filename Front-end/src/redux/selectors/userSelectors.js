@@ -1,1 +1,1 @@
-export const selectUserFirstName = (state) => state.profile.body.firstName;
+export const selectUserProfile = (state) => state.user.profile;

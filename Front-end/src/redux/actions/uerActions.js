@@ -36,3 +36,11 @@ export const fetchProfile = () => async (dispatch, getState) => {
     // handle error
   }
 };
+//Créer une Action de Déconnexion
+export const LOGOUT = 'LOGOUT';
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
+};
