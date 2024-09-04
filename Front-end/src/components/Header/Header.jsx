@@ -3,8 +3,8 @@ import { NavLink, Link,useNavigate } from "react-router-dom";
 import logo from "../../assets/argentBankLogo.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserProfile } from '../../redux/selectors/userSelectors'; // Import du sélecteur
-import { fetchProfile } from '../../redux/actions/uerActions';
-import { logout } from '../../redux/actions/uerActions'; // Importer l'action de déconnexion
+import { fetchProfile } from '../../redux/actions/userActions';
+import { logout } from '../../redux/actions/userActions'; // Importer l'action de déconnexion
 
 function Header() {
     const dispatch = useDispatch();
