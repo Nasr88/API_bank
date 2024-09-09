@@ -9,11 +9,13 @@ import "./style.scss";
 function EditNameForm() {
     const dispatch = useDispatch();
     const profile = useSelector(selectUserProfile);
-
+// const userId= profile.body.id;
+// console.log("profile user id:",profile.body.id);
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
     const [editNameFormError, setEditNameFormError] = useState("");
-
+    const [successMessage, setSuccessMessage] = useState("");
+    
     useEffect(() => {
         // Récupérer le profil utilisateur à chaque chargement du composant
         dispatch(fetchProfile());
@@ -33,11 +35,18 @@ function EditNameForm() {
             setEditNameFormError("FirstName and LastName are the same as the current ones.");
         } else if (newFirstName.length === 0 || newLastName.length === 0) {
             setEditNameFormError("Inputs can't be empty");
-        } else {
-            // Mettre à jour le profil utilisateur
-            dispatch(updateProfile(newFirstName, newLastName));
-            setEditNameFormError("");
-        }
+        }  // Mettre à jour le profil utilisateur
+        dispatch(updateProfile(newFirstName, newLastName))
+            .then(() => {
+                setEditNameFormError(""); // Réinitialiser les erreurs
+                setSuccessMessage("Profile updated successfully.");
+                // Optionnel: Si vous avez besoin de recharger le profil
+                dispatch(fetchProfile());
+            }) 
+            .catch((error) => {
+                setEditNameFormError("Failed to update profile.");
+            });
+       
     };
 
     return (
@@ -66,6 +75,7 @@ function EditNameForm() {
                 <button type="submit" className="edit-button">
                     Save
                 </button>
+                <button className="edit-button">Cancel</button>
             </div>
             {editNameFormError && (
                 <div className="input-group input-center">

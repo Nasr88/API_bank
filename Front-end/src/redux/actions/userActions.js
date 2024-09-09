@@ -11,8 +11,9 @@ export const fetchProfileSuccess = (profile) => {
 };
 
 export const fetchProfile = () => async (dispatch, getState) => {
-  const { token } = getState().auth; // Access token from auth state
-
+  let { token } = getState().auth; // Access token from auth state
+  if(!token)
+   token =localStorage.getItem("token");
   try {
     if (token) {
       const response = await fetch(

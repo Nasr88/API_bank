@@ -20,12 +20,13 @@ export const loginUserAction = (credentials, navigate) => {
             const token = data.body.token;
             console.log("token",token); 
             
-            // // Une fois connecté, récupérez le profil utilisateur
-             //const userProfile = await fetchUserProfileApi(token);
-            // console.log("userProfile",userProfile);
+
+             // Stocker le token dans le localStorage
+             localStorage.setItem('token', token);
+
             // Dispatch success action
             dispatch({ type: LOGIN_USER_SUCCESS, payload: data });
-              // Navigate to the profile page
+            // Navigate to the profile page
             navigate('/profile');
             
         } catch (error) {

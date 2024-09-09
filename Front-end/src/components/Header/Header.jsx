@@ -15,6 +15,12 @@ function Header() {
     useEffect(() => {
         dispatch(fetchProfile());
       }, [dispatch]);
+	  useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            dispatch(fetchProfile(token));
+        }
+    }, [dispatch]);
 
   const handleLogout = () => {
     // Vider le cache local
@@ -25,7 +31,7 @@ function Header() {
     dispatch(logout());
 
     // Rediriger l'utilisateur vers la page de connexion ou la page d'accueil
-    navigate("/login"); 
+    navigate("/sign-in"); 
 };
 
 

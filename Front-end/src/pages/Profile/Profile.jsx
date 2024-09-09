@@ -1,39 +1,41 @@
 import React, { useEffect } from 'react';
-// import { NavLink, Link,useNavigate } from "react-router-dom";
-
+import {useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-// import { selectUserProfile } from '../../redux/selectors/userSelectors'; // Import du sélecteur
 import { fetchProfile } from '../../redux/actions/userActions';
-// import AccountCard from '../../components/accountCard/AccountCard';
+import { selectUserAccountData } from '../../redux/selectors/userSelectors';
 import EditNameForm from '../../components/editNameForm/EditNameForm';
-function Header() {
+import { selectUserProfile } from '../../redux/selectors/userSelectors';
+import AccountCard from '../../components/accountCard/AccountCard';
+import AccountCardData from '../../data/AccountCardData.json';
+
+function Profile() {
     const dispatch = useDispatch();
-
+    const navigate =  useNavigate();
+    const profile = useSelector(selectUserProfile);
+    const id= profile?.body?.id;
+    console.log("profile user id:",id);
+    // const userId = profile.body.id;
+    // console.log("userId:",userId)
+     const accountData = useSelector(selectUserAccountData(id));
+     console.log("accountData",accountData)
     
-    // const profile = useSelector(selectUserProfile);
-    
-
     useEffect(() => {
         dispatch(fetchProfile());
       }, [dispatch]);
+     
 
+    useEffect(() => {
+      // Vérifiez si le token est présent dans le localStorage
+      const token = localStorage.getItem('token');
+      if (token) {
+          // Si le token existe, dispatch une action pour récupérer le profil de l'utilisateur
+          dispatch(fetchProfile(token));
+      }else{navigate("/sign-in"); }
+  }, [dispatch]);
+      
 
-
-
-
-return(
+  return(
   
-        //     <div>
-			
-        //         {profile  && (
-				// 	<NavLink className="main-nav-item" to="/profile">
-				// 		<i className="fa fa-user-circle"></i>
-				// 		{!profile.body.firstName  && "Profile"}
-				// 		{profile.body.firstName  && profile.body.firstName }
-				// 	</NavLink>
-				// )}
-			
-        //         </div>
         <main className="main bg-dark">
             <div className="header">
               <h1>
@@ -42,12 +44,21 @@ return(
               <EditNameForm />
             </div>
 			      <h2 className="sr-only">Accounts</h2>
-			      {/* <AccountCard /> */}
-		    </main>
+			 {/* Return items from json file with map */}
+       {AccountCardData.map((data) => (
+                    /* Return account component */
+                    <AccountCard 
+                        key={data.id}
+                        title={data.title}
+                        amount={data.amount}
+                        description={data.description}
+                    />
+                ))}
+        </main>
     
 )
 }
 
-export default Header;
+export default Profile;
 
 
