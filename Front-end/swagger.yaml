@@ -1,0 +1,390 @@
+swagger: '2.0'
+info:
+  description: <p>Contains all available API endpoints in this codebase</p>
+  version: 1.0.0
+  title: Bank Argent API documentation
+  termsOfService: https://smartbear.com/terms-of-use/
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+tags:
+  - name: User Module
+  - name: Transactions Module
+paths:
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User's accounts
+      description: API for getting all accounts
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User accounts retrieved successully
+          schema:
+            $ref: '#/definitions/AllAccountsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/Accounts/{accountId}/transactions:
+    get:
+      tags:
+        - Transactions Module
+      summary: Transactions details
+      description: Returns transactions details
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Returns an array of transactios
+          schema:
+            $ref: '#/definitions/AllTransactionsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionsId}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Transaction details
+      description: API for getting a single transaction details
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: integer
+        - in: path
+          name: transactionsId
+          description: ID of the transaction
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Transaction retrieved successully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionsId}/category:
+    patch:
+      tags:
+        - Transactions Module
+      summary: Update an existing transaction (category)
+      description: API for updating a transaction's category
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: integer
+        - in: path
+          name: transactionsId
+          description: ID of the transaction
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Update transaction's category information
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: Transaction updated successully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/accounts/{accountId}/transactions/{transactionsId}/notes:
+    patch:
+      tags:
+        - Transactions Module
+      summary: Update an existing transaction (notes)
+      description: API for updating a transaction's notes
+      parameters:
+        - in: path
+          name: accountId
+          description: ID of the account
+          required: true
+          type: integer
+        - in: path
+          name: transactionsId
+          description: ID of the transaction
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Update transaction's notes information
+          required: true
+          schema:
+            $ref: '#/definitions/Notes'
+      responses:
+        '200':
+          description: Transaction updated successully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+definitions:
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  User:
+    properties:
+      email:
+        type: string
+        description: User email
+      password:
+        type: string
+        description: User password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  LoginResponse:
+    properties:
+      token:
+        type: string
+  ApiResponse:
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+            description: ''
+          email:
+            type: string
+            description: ''
+  UserProfile:
+    properties:
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+  AccountsResponse:
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          accountId:
+            type: number
+          title:
+            type: string
+          amount:
+            type: number
+          description:
+            type: string
+  AllAccountsResponse:
+    type: array
+    items:
+      $ref: '#/definitions/AccountsResponse'
+    example:
+      - status: 0
+        message: Accountss retrieved successfully
+        body:
+          accountId: 1
+          title: Argent Bank Checking (x8349)
+          amount: 2082.79
+          description: Available Balance
+      - status: 0
+        message: Accounts retrieved successfully
+        body:
+          accountId: 2
+          title: Argent Bank Savings (x6712))
+          amount: 10928.42
+          description: Available Balance
+  TransactionsResponse:
+    properties:
+      transactionsId:
+        type: integer
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: number
+      balance:
+        type: number
+      type:
+        type: string
+      category:
+        type: string
+      Notes:
+        type: string
+  AllTransactionsResponse:
+    type: array
+    items:
+      $ref: '#/definitions/TransactionsResponse'
+    example:
+      - transactionsId: 23
+        date: June 20th, 2020
+        description: Golden Sun Bakery
+        amount: 5
+        balance: 2082.79
+        'type:': Electronic
+        category: food
+        Notes: ''
+      - transactionsId: 25
+        date: June 20th, 2020
+        description: Golden Sun Bakery
+        amount: 30
+        balance: 2117.79
+        'type:': Electronic
+        category: food
+        Notes: ''
+  Category:
+    properties:
+      category:
+        type: string
+        description: transaction's category
+  Notes:
+    properties:
+      notes:
+        type: string
+        description: transaction's notes
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    in: header
+    name: Authorization
+    description: Please enter your Bearer token in the format **Bearer {token}**

@@ -16,7 +16,7 @@ function Router() {
 				<Header/>
 				<Routes>
 					<Route exact path="/" element={<Home />} />
-					<Route exact path="/sign-in" element={<Login />} />
+					<Route exact path="/login" element={<Login />} />
 					<Route exact path="/profile" element={<Profile />} />
 				</Routes>
 				<Footer />

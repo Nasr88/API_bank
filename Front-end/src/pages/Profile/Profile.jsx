@@ -30,7 +30,7 @@ function Profile() {
       if (token) {
           // Si le token existe, dispatch une action pour récupérer le profil de l'utilisateur
           dispatch(fetchProfile(token));
-      }else{navigate("/sign-in"); }
+      }else{navigate("/login"); }
   }, [dispatch]);
       
 

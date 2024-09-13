@@ -31,7 +31,7 @@ function Header() {
     dispatch(logout());
 
     // Rediriger l'utilisateur vers la page de connexion ou la page d'accueil
-    navigate("/sign-in"); 
+    navigate("/login"); 
 };
 
 
@@ -44,7 +44,7 @@ return(
 			</Link>
             <div>
 				{!profile && (
-					<NavLink className="main-nav-item" to="/sign-in">
+					<NavLink className="main-nav-item" to="/login">
 						<i className="fa fa-user-circle"></i>
 						Sign In
 					</NavLink>
