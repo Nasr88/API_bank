@@ -143,6 +143,11 @@ paths:
       summary: Transactions details
       description: Returns transactions details
       parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
         - in: path
           name: accountId
           description: ID of the account
@@ -164,6 +169,11 @@ paths:
       summary: Transaction details
       description: API for getting a single transaction details
       parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
         - in: path
           name: accountId
           description: ID of the account
