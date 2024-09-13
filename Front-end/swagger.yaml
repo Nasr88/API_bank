@@ -136,7 +136,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/Accounts/{accountId}/transactions:
+  /user/accounts/{accountId}/transactions:
     get:
       tags:
         - Transactions Module
@@ -157,7 +157,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}:
+  /user/accounts/{accountId}/transactions/{transactionId}:
     get:
       tags:
         - Transactions Module
@@ -170,7 +170,7 @@ paths:
           required: true
           type: integer
         - in: path
-          name: transactionsId
+          name: transactionId
           description: ID of the transaction
           required: true
           type: integer
@@ -178,12 +178,12 @@ paths:
         '200':
           description: Transaction retrieved successully
           schema:
-            $ref: '#/definitions/TransactionsResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}/category:
+  /user/accounts/{accountId}/transactions/{transactionId}/category:
     patch:
       tags:
         - Transactions Module
@@ -196,7 +196,7 @@ paths:
           required: true
           type: integer
         - in: path
-          name: transactionsId
+          name: transactionId
           description: ID of the transaction
           required: true
           type: integer
@@ -210,12 +210,12 @@ paths:
         '200':
           description: Transaction updated successully
           schema:
-            $ref: '#/definitions/TransactionsResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}/notes:
+  /user/accounts/{accountId}/transactions/{transactionId}/notes:
     patch:
       tags:
         - Transactions Module
@@ -228,7 +228,7 @@ paths:
           required: true
           type: integer
         - in: path
-          name: transactionsId
+          name: transactionId
           description: ID of the transaction
           required: true
           type: integer
@@ -242,7 +242,7 @@ paths:
         '200':
           description: Transaction updated successully
           schema:
-            $ref: '#/definitions/TransactionsResponse'
+            $ref: '#/definitions/TransactionResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -320,7 +320,7 @@ definitions:
       $ref: '#/definitions/AccountsResponse'
     example:
       - status: 0
-        message: Accountss retrieved successfully
+        message: Accounts retrieved successfully
         body:
           accountId: 1
           title: Argent Bank Checking (x8349)
@@ -333,9 +333,11 @@ definitions:
           title: Argent Bank Savings (x6712))
           amount: 10928.42
           description: Available Balance
-  TransactionsResponse:
+  TransactionResponse:
     properties:
-      transactionsId:
+      transactionId:
+        type: integer
+      accountId:
         type: integer
       date:
         type: string
@@ -354,9 +356,10 @@ definitions:
   AllTransactionsResponse:
     type: array
     items:
-      $ref: '#/definitions/TransactionsResponse'
+      $ref: '#/definitions/TransactionResponse'
     example:
-      - transactionsId: 23
+      - transactionId: 23
+        accountId: 2
         date: June 20th, 2020
         description: Golden Sun Bakery
         amount: 5
@@ -364,7 +367,8 @@ definitions:
         'type:': Electronic
         category: food
         Notes: ''
-      - transactionsId: 25
+      - transactionId: 25
+        accountId: 2
         date: June 20th, 2020
         description: Golden Sun Bakery
         amount: 30
@@ -372,6 +376,15 @@ definitions:
         'type:': Electronic
         category: food
         Notes: ''
+      - transactionId: 202
+        accountId: 1
+        date: June 20th, 2020
+        description: Golden Sun Bakery
+        amount: 9
+        balance: 800.2
+        'type:': Electronic
+        category: internet
+        Notes: internet bill for this month
   Category:
     properties:
       category:

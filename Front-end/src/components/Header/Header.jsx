@@ -24,9 +24,9 @@ function Header() {
 
   const handleLogout = () => {
     // Vider le cache local
-    localStorage.clear();
-    sessionStorage.clear();
-
+    // localStorage.clear();
+    //sessionStorage.clear();
+    localStorage.removeItem('token')
     // Déclencher l'action de déconnexion
     dispatch(logout());
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserAction } from '../../redux/actions/authActions';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +13,27 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        rememberMe ? localStorage.setItem("userEmail", email) : localStorage.removeItem("userEmail");
+        if(rememberMe){ 
+            localStorage.setItem("userEmail", email)
+            localStorage.setItem("remeberMe", true)
+
+         } else {
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("remeberMe");
+        };
         dispatch(loginUserAction({ email, password }, navigate));
     };
     /**
 	 Lorsque l'utilisateur clique sur la case à cocher, la valeur de la case à cocher est définie à l'opposé de ce qu'elle était
      auparavant.
 	 */
+    useEffect(()=>{
+       const savedEmail =  localStorage.getItem("userEmail");
+       if (savedEmail){
+        setRememberMe(true);
+        setEmail(savedEmail);
+       }
+    },[])
 	const handleRememberMe = () => {
 		setRememberMe(!rememberMe);
 	};
