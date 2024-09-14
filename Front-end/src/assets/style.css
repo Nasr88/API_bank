@@ -190,6 +190,19 @@ body {
 .input-remember label {
   margin-left: 0.25rem;
 }
+.login-form{
+  margin-bottom: 200px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+/* Pour les écrans de moins de 768px de large (tablettes, mobiles) */
+@media (max-width: 768px) {
+  .login-form{
+    margin-bottom: 100px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
 
 .input-wrapper {
   display: flex;

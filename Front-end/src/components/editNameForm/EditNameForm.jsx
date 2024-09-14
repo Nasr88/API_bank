@@ -49,6 +49,14 @@ function EditNameForm() {
        
     };
 
+    const handleCancel = () => {
+        // Réinitialiser les champs avec les valeurs actuelles du profil
+        setNewFirstName(profile.body.firstName || '');
+        setNewLastName(profile.body.lastName || '');
+        setEditNameFormError(""); // Réinitialiser les erreurs
+        setSuccessMessage(""); // Réinitialiser les messages de succès
+    };
+
     return (
         <form className="new-name-form" onSubmit={handleSubmit}>
             <div className="input-group">
@@ -75,7 +83,7 @@ function EditNameForm() {
                 <button type="submit" className="edit-button">
                     Save
                 </button>
-                <button className="edit-button">Cancel</button>
+                <button className="edit-button"  onClick={handleCancel} >Cancel</button>
             </div>
             {editNameFormError && (
                 <div className="input-group input-center">
